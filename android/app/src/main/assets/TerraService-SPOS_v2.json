@@ -1,0 +1,40 @@
+{
+  "terraClientID": "cartsample:android:playstore:0.0.1",
+  "terraEnvironment": "staging",
+  "defaultConfig": {
+    "@type": "type.googleapis.com/terra.v1.Pandora",
+    "config": "vTCys2C54uHGV9YWM9lQJTGaDhqQY7y/Os2dkr/CIBqMBGY8VEIYe3g2u0vAp0SwV8p78lJrSwR+nOw88RvAJvK68qqlKUHzWKk3OmnO6lqvLi54tkgJKPqvR9SFVqPsTsttkiRBif3A1gqbRLC9++wN/h4veadQ0xNrrbadinj+ke5e",
+    "services": [
+      {
+        "name": "Tracker",
+        "code": "tracker",
+        "config": "V6d8GHBHm2XzKNnRreWUcT3/iw26FphDLE75NBD98UNO0xwLTcMPjK3SHSEDR5TuLNQMkR5s/WCeEaDqlM+hnuHwiavvyjpZvHew+HsqU2XabWEpQfstPZOP0wZjf2t53oLHQno9pWdHGgdnb9R+p/p338fimV8if6Jtwho0ZnW5rpzgh20jhqyN10Dei1SmfOCvFK03vmCbYCWBsrxI+aj7ubOVneETZhrmKhHLygH166QMKK74wZ8I5/I="
+      },
+      {
+        "name": "IAM",
+        "code": "iam",
+        "config": "d3s2Dm1HPJLVphzMswBKOsvBpEpDXbBaLmFNTgn46dNsj2Liqx2pu97eDoxJuF2XtSxEG4q6gI423s2JRSLIIQYgTvoq0+UzkbVZ1aNrYWvJVIEfMTrQUas53wiPo428FYk7fwMiD3XSaFLxrd6D21NGGeBGaQlk6kq0f51fpgIh5ekonr8yY95GDVUgS4dE/b1nL3XkwykOxBkXeAMZBDsdQIarZWP7J5tJwRKaI+lb4tVLgZTkf2yLZ+gMLUEStVAFzhXu9GuvFXf2kGxvwGzQ23k9/daGas0QSs03u31Z6JBG4PRYRCChyyWbkJtHUYra7hAcRtrJaYtaCNR2+8fAtw6TsaJZLYJ4DusD4h6GmyczLStbgUDqd/pl0Jk4LGCvQZlPnLVUYLuHsQumMcvBfZvcoVuwAYW6tx5ba8XLYNmbMIc5iwTg4u31L9tAcdoImTv0m80oNNm/D++mH/5Ix3BZCDIsxZnpu1zvkZxCQVHRH5CAP5zvpLomJI2Nlw4vFPWDQHEf3JH/CfP+llE5mCOwhnJyOonP9ySefKdktVVT1n4aye+k8ZLerOmhgWabnWVhmlvjNLgl+vhK3eXrUXQz9TlB7YjzE7AxWGJ66OMet9OsMTd0ENrmRQ=="
+      },
+      {
+        "name": "Discovery",
+        "code": "discovery",
+        "config": "+mt3D4f+oyo2ZOxTJkXxhhCAn9T0Q77p0+d7S3m3r/jb4s49FUbGtnZ+8VMIZnQqaig/gxxYdgQ9ESmq+9Ef/TF2LTI6UOxdNSRgF5VtWp9fSkKNp4kQt3N49ZSnzQN1nqeZQyyn4xN+aJ3YpovNJWH94j6s3XEyAX/FgZvqnU1gZhT3UBjIw5OMX4cpFPFKIT5tr7y1r3NlniSprYZOcBiPfyo5oZjdYkNgIC8VUzZCtu0/hU7bukc="
+      },
+      {
+        "name": "Cart",
+        "code": "cart",
+        "config": "WCchdSbR+jwtRcNk8MeBtAW1tkgvi8/8kpc6RCXorZFwq6YSP7ZFmJe2sZs87cECock+5m8wpR3VbkmCuCUC0kRZsqlXdYAUU9vf5wawvRdDOOryzBHd123+6awMJsLxyQTsZ8vEf1/GeqtkbDpyQ7WYKTZIWFTTx7+OTodEK0p4FmF4Zzydqt3H7GSukaC7aA7qvWaMesaU8sxo4Bx1/A=="
+      },
+      {
+        "name": "Apollo",
+        "code": "apollo",
+        "config": "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"
+      },
+      {
+        "name": "Loyalty",
+        "code": "loyalty",
+        "config": "gmtediBydVvTUBx7w0xRzYDWq45wMRfkxKayFD1Jj9efzdT8tVOVa01++MpyWQmHJ/k09xW8ZfKJ4Xx5HD1BDDbOmWEoap+utRi0KU+mn5mNYk9SeppPbNx81OolQji/DSE0ui8EECHneh4yuHjTqdIGkMWEVc8sS0BwvcnIdYEqGHt+mRmrp7I2Dv8qXv/8LYmBY9e570Qk6IWLb606AUL40ypzxv1G9QQ257yaJLu8wOGVkG06EotBRe/rZntJmui0pY2apwPC6MC1AqruH+N5DazRbEDzC5XabJLtYPUMoEOXWeAuhD6izvslKyIeeUD6kXm1bwFlC2So"
+      }
+    ]
+  }
+}
