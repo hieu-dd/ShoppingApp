@@ -71,5 +71,9 @@ dependencies {
     implementation 'com.android.support:multidex:1.0.3'
     implementation "vn.teko.terra:terra-core-android:0.8.0"
     implementation 'com.google.code.gson:gson:2.8.9'
-    implementation 'vn.teko.cart:core:0.50.0'
+    implementation 'vn.teko.cart:core:0.51.0'
+    implementation "vn.teko.android.auth:terra-auth:0.6.0-alpha1"
+    implementation 'androidx.appcompat:appcompat:1.1.0-rc01'
+
+
 }

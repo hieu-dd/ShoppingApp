@@ -25,7 +25,7 @@ class CartManager with ChangeNotifier {
   }
 
   Future<void> refreshCart() async {
-    Future.delayed(Duration(seconds: 2));
+    await Future.delayed(Duration(seconds: 2));
     final cart = CartEntity.fake(10);
     _cart = cart;
     notifyListeners();
