@@ -1,16 +1,15 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:uuid/uuid.dart';
+import 'package:spos_v2/channel/FlutterMethodChannel.dart';
 
 class CartLineEntity with ChangeNotifier {
   final String id;
   final String name;
   final String sku;
   final String imageUrl;
-  final int totalAvailable;
-  final double price;
-  final double supplierPrice;
+  final int? totalAvailable;
+  final int price;
+  final int supplierPrice;
+  final int sellerId;
   var selected = true;
   var quantity = 1;
 
@@ -18,13 +17,18 @@ class CartLineEntity with ChangeNotifier {
     required this.id,
     required this.name,
     required this.sku,
+    required this.sellerId,
     required this.imageUrl,
     required this.totalAvailable,
     required this.price,
     required this.supplierPrice,
   });
 
-  void updateItem(int? quantity, bool? selected) {
+  Future<void> updateItem({
+    int? quantity,
+    bool? selected,
+    bool needApi = true,
+  }) async {
     if (quantity != null) {
       this.quantity = quantity;
     }
@@ -32,29 +36,28 @@ class CartLineEntity with ChangeNotifier {
       this.selected = selected;
     }
     notifyListeners();
+    if (needApi) {
+      await FlutterMethodChannel.platform.invokeMethod('updateItem', {
+        'id': id,
+        'quantity': quantity,
+        'selected': selected,
+      });
+    }
   }
 
   static CartLineEntity fromJson(dynamic jsonString) {
-    return CartLineEntity(
+    var item = CartLineEntity(
       id: jsonString['id'],
       name: jsonString['name'],
       sku: jsonString['sku'],
-      imageUrl: jsonString['imageUrl'],
+      sellerId: jsonString['sellerId'],
+      imageUrl: jsonString['product']['productInfo']['imageUrl'],
       totalAvailable: jsonString['totalAvailable'],
       price: jsonString['price'],
-      supplierPrice: jsonString['supplierPrice'],
+      supplierPrice: jsonString['price'],
     );
-  }
-
-  static CartLineEntity fake({int index = 0}) {
-    return CartLineEntity(
-      id: Uuid().v1(),
-      name: "San pham ${index}",
-      sku: "Sku ${index}",
-      imageUrl: "https://vsi.gov.vn/Content/Publishing/Images/product-img.png",
-      totalAvailable: Random().nextInt(100),
-      price: Random().nextInt(1000000).toDouble(),
-      supplierPrice: Random().nextInt(10000000).toDouble(),
-    );
+    item.quantity = jsonString['quantity'];
+    item.selected = jsonString['isSelected'];
+    return item;
   }
 }

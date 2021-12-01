@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:spos_v2/providers/cart_manager.dart';
-import 'package:spos_v2/widgets/cart/cart_line_item.dart';
+import 'package:spos_v2/widgets/cart/list_items.dart';
+import 'package:intl/intl.dart' ;
 
 class CartScreen extends StatelessWidget {
   const CartScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final cartManager = Provider.of<CartManager>(context, listen: false);
     final theme = Theme.of(context);
     return Scaffold(
       backgroundColor: Colors.grey.shade200,
@@ -22,7 +24,7 @@ class CartScreen extends StatelessWidget {
       ),
       body: FutureBuilder<void>(
         initialData: null,
-        future: Provider.of<CartManager>(context, listen: false).refreshCart(),
+        future: cartManager.refreshCart(),
         builder: (ctx, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
@@ -32,23 +34,16 @@ class CartScreen extends StatelessWidget {
 
           return Consumer<CartManager>(
             builder: (ctx, cartManager, _) {
+              final formatter = NumberFormat.decimalPattern();
               final cart = cartManager.cart;
-              if (cart == null) {
+              if (cart == null || cart.orderLines.isEmpty) {
                 return const Center();
               }
               return Column(
                 children: [
-                  Expanded(
-                    child: ListView.builder(
-                      itemBuilder: (context, index) {
-                        final item = cart.orderLines[index];
-                        return ChangeNotifierProvider.value(
-                          value: item,
-                          child: CartLineItemView(key: ValueKey(item.id)),
-                        );
-                      },
-                      itemCount: cart.orderLines.length,
-                    ),
+                  ChangeNotifierProvider.value(
+                    value: cart,
+                    child: ListItems(),
                   ),
                   Container(
                     decoration: BoxDecoration(
@@ -63,7 +58,7 @@ class CartScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "10.300.000 đ",
+                          formatter.format(cart.grandTotal),
                           style: TextStyle(
                             color: theme.primaryColor,
                             fontWeight: FontWeight.w700,
@@ -90,3 +85,4 @@ class CartScreen extends StatelessWidget {
     );
   }
 }
+

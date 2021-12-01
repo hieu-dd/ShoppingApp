@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:spos_v2/providers/cart_line_entity.dart';
 import 'package:spos_v2/providers/cart_manager.dart';
@@ -11,6 +12,7 @@ class CartLineItemView extends StatelessWidget {
   Widget build(BuildContext context) {
     final item = Provider.of<CartLineEntity>(context);
     final cartManager = Provider.of<CartManager>(context);
+    final formatter = NumberFormat.decimalPattern();
 
     void _toggleSelectItem(bool? isSelect) {
       cartManager.updateItem(item.id, null, isSelect);
@@ -19,7 +21,7 @@ class CartLineItemView extends StatelessWidget {
     return Column(
       children: [
         Container(
-          margin: const EdgeInsets.only(top: 10),
+          margin: const EdgeInsets.only(bottom: 10),
           padding: const EdgeInsets.only(
             top: 12,
             bottom: 12,
@@ -55,7 +57,11 @@ class CartLineItemView extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Column(
-                          children: [Text(item.price.toString())],
+                          children: [
+                            Text(
+                              formatter.format(item.price),
+                            )
+                          ],
                         ),
                         QuantityInput(
                           quantity: item.quantity,

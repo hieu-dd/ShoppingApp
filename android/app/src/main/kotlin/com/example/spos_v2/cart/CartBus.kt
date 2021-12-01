@@ -20,8 +20,11 @@ class CartBus(
     private val terraApp: TerraApp
 ) {
     init {
+        cartManager.refreshCart()
         subscribeAddItem()
     }
+
+    fun getCartFlow() = cartManager.getCartFlow()
 
     private fun subscribeAddItem() {
         terraApp.getTerraBus().subscribeAddItemEvent(object : Subscriber<AddProductRequest, CartItemEntity>() {
@@ -43,37 +46,59 @@ class CartBus(
         })
     }
 
+    suspend fun updateItem(lineId: String, quantity: Int?, selected: Boolean?) = cartManager.updateItem(
+        lineId,
+        quantity = quantity?.toDouble(),
+        selected = selected,
+        null,
+        null,
+        null,
+        null
+    )
+
+    suspend fun updateItemsBySeller(id: Int, selected: Boolean) = cartManager.updateItemsBySeller(id, selected)
+
 
     companion object {
+        private var instance: CartBus? = null
+
+        @JvmStatic
+        fun getInstance() = instance
+
         @JvmStatic
         fun getInstance(
             context: Context,
             terraApp: TerraApp,
-        ) = CartBus(
-            CartFactory.create(
-                context,
-                cartConfig {
-                    tenant = "vnshop"
-                    baseUrl = "https://carts-beta.stag.tekoapis.net"
-                    this.terminal = "vnshop"
-                    this.channel = "vnshop"
-                    this.channelType = "online"
-                    this.channelId = 6
-                    this.logEnable = true
-                },
-                object : OAuthCallback {
-                    override fun getToken(callback: GetTokenCallback) {
-                        callback.onSuccess(null)
-                    }
+        ): CartBus {
+            if (instance == null) {
+                instance = CartBus(
+                    CartFactory.create(
+                        context,
+                        cartConfig {
+                            tenant = "vnshop"
+                            baseUrl = "https://carts-beta.stag.tekoapis.net"
+                            this.terminal = "vnshop"
+                            this.channel = "vnshop"
+                            this.channelType = "online"
+                            this.channelId = 6
+                            this.logEnable = true
+                        },
+                        object : OAuthCallback {
+                            override fun getToken(callback: GetTokenCallback) {
+                                callback.onSuccess(null)
+                            }
 
-                    override fun refreshToken(callback: RefreshTokenCallback) {
-                        callback.onSuccess()
-                    }
-                }
-            ),
+                            override fun refreshToken(callback: RefreshTokenCallback) {
+                                callback.onSuccess()
+                            }
+                        }
+                    ),
 
-            terraApp,
-        )
+                    terraApp,
+                )
+            }
+            return instance!!
+        }
     }
 }
 
