@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:spos_v2/providers/cart_manager.dart';
+import 'package:spos_v2/theme/apollo_color.dart';
 import 'package:spos_v2/widgets/cart/list_items.dart';
-import 'package:intl/intl.dart' ;
 
 class CartScreen extends StatelessWidget {
   const CartScreen({Key? key}) : super(key: key);
@@ -10,6 +11,8 @@ class CartScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cartManager = Provider.of<CartManager>(context, listen: false);
+    final apolloColor = Provider.of<ApolloColor>(context);
+
     final theme = Theme.of(context);
     return Scaffold(
       backgroundColor: Colors.grey.shade200,
@@ -60,7 +63,7 @@ class CartScreen extends StatelessWidget {
                         Text(
                           formatter.format(cart.grandTotal),
                           style: TextStyle(
-                            color: theme.primaryColor,
+                            color: apolloColor.primaryColor500,
                             fontWeight: FontWeight.w700,
                             fontSize: 24,
                           ),
@@ -85,4 +88,3 @@ class CartScreen extends StatelessWidget {
     );
   }
 }
-

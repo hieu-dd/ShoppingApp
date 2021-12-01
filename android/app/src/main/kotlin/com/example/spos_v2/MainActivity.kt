@@ -13,6 +13,8 @@ import com.example.spos_v2.cart.CartBus
 import com.example.spos_v2.discovery.SearchDiscoveryProductRequest
 import com.example.spos_v2.discovery.SearchDiscoveryProductResponse
 import com.example.spos_v2.models.AddProductRequest
+import vn.teko.apollo.ApolloTheme
+import vn.teko.apollo.config.toApolloConfiguration
 import vn.teko.cart.domain.model.CartItemEntity
 import vn.teko.discovery.core.TerraDiscovery
 import vn.teko.discovery.core.model.DiscoveryProduct
@@ -29,6 +31,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         terraApp = TerraApp.initializeApp(this@MainActivity.application, APP_NAME)
+        initApolloInstance(terraApp.getConfig("apollo").config, APP_NAME)
         CartBus.getInstance(this, terraApp)
         TerraDiscovery.getInstance(terraApp = terraApp)
         DiscoveryManager.getInstance(terraApp)
@@ -76,5 +79,14 @@ class MainActivity : AppCompatActivity() {
         } catch (e: Throwable) {
             emptyList()
         }
+    }
+
+    fun initApolloInstance(config: String, appName: String): ApolloTheme {
+        val apolloConfig = config.toApolloConfiguration()
+
+        return ApolloTheme.createInstance(
+            appName,
+            apolloConfig.data.apolloColorTheme
+        )
     }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/services.dart';
 import 'package:spos_v2/providers/cart_manager.dart';
+import 'package:spos_v2/theme/apollo_color.dart';
 
 class FlutterMethodChannel {
   static const platform = MethodChannel(FlutterMethodChannel.CHANNEL_FLUTTER);
@@ -14,12 +15,13 @@ class FlutterMethodChannel {
     methodChannel = MethodChannel(CHANNEL_FLUTTER);
     methodChannel!
         .setMethodCallHandler(this.methodHandler); // set method handler
+    ApolloColor.instance.getData();
   }
 
   Future<void> methodHandler(MethodCall call) async {
     switch (call.method) {
       case "refreshCart":
-        CartManager.getInstance().refreshCart();
+        CartManager.instance.refreshCart();
         break;
       default:
         print('no method handler for method ${call.method}');

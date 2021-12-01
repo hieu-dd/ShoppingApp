@@ -5,12 +5,11 @@ import 'package:spos_v2/channel/FlutterMethodChannel.dart';
 import 'package:spos_v2/providers/cart_entity.dart';
 
 class CartManager with ChangeNotifier {
-  static CartManager? instance;
-
-  static CartManager getInstance() {
-    instance ??= CartManager();
-    return instance!;
+  static CartManager get instance {
+    return CartManager._init();
   }
+
+  CartManager._init();
 
   CartEntity? _cart;
 

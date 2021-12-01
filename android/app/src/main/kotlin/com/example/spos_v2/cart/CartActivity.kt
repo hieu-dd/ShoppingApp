@@ -6,18 +6,18 @@ import androidx.annotation.NonNull
 import androidx.lifecycle.lifecycleScope
 import com.example.spos_v2.MainActivity.Companion.APP_NAME
 import com.example.spos_v2.cart.NativeMethodChannel.CHANNEL_FLUTTER
-import com.example.spos_v2.discovery.SearchDiscoveryProductRequest
-import com.example.spos_v2.discovery.SearchDiscoveryProductResponse
 import com.google.gson.Gson
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
+import vn.teko.android.core.util.instancesmanager.AppIdentifier
+import vn.teko.apollo.extension.getApolloTheme
 import vn.teko.cart.core.infrastructure.cart.data.getOrNull
 import vn.teko.terra.core.android.terra.TerraApp
 
-class CartActivity : FlutterActivity() {
+class CartActivity : FlutterActivity(), AppIdentifier {
     private lateinit var terraApp: TerraApp
     val cartBus = CartBus.getInstance()
 
@@ -25,17 +25,13 @@ class CartActivity : FlutterActivity() {
         super.configureFlutterEngine(flutterEngine)
         NativeMethodChannel.configureChannel(flutterEngine)
         terraApp = TerraApp.initializeApp(this@CartActivity.application, APP_NAME)
+
         MethodChannel(
             flutterEngine.dartExecutor.binaryMessenger,
             CHANNEL_FLUTTER
         ).setMethodCallHandler { call, result ->
 
             when (call.method) {
-                "getProducts" -> {
-                    lifecycleScope.launchWhenStarted {
-                        result.success(getProducts())
-                    }
-                }
                 "getCart" -> lifecycleScope.launchWhenStarted {
                     result.success(getCart())
                 }
@@ -58,6 +54,10 @@ class CartActivity : FlutterActivity() {
                         )
                     )
                 }
+                "getApolloTheme" -> {
+                    result.success(Gson().toJson(this@CartActivity.getApolloTheme()))
+                }
+
                 else -> result.notImplemented()
             }
         }
@@ -85,21 +85,7 @@ class CartActivity : FlutterActivity() {
         return CartBus.getInstance()?.updateItemsBySeller(id, selected)?.isSuccess() ?: false
     }
 
-    private suspend fun getProducts(): String {
-        return try {
-            val result = terraApp.getTerraBus().request(
-                "DISCOVERY_SEARCH_PRODUCT",
-                SearchDiscoveryProductRequest(""),
-                SearchDiscoveryProductResponse::class.java
-            )
-            result.getOrNull()?.result?.products?.let {
-                Gson().toJson(it)
-            }.orEmpty()
-        } catch (e: Throwable) {
-            println("caught exception: $e")
-            e.message.toString()
-        }
-    }
+    override val appIdentifier: String = APP_NAME
 
     companion object {
         fun createDefaultIntent(launchContext: Context): Intent {
