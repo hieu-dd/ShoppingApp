@@ -20,6 +20,7 @@ import vn.teko.terra.core.android.terra.TerraApp
 class CartActivity : FlutterActivity(), AppIdentifier {
     private lateinit var terraApp: TerraApp
     val cartBus = CartBus.getInstance()
+    val cartSdk = CartSdk.getInstance()
 
     override fun configureFlutterEngine(@NonNull flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
@@ -56,6 +57,9 @@ class CartActivity : FlutterActivity(), AppIdentifier {
                 }
                 "getApolloTheme" -> {
                     result.success(Gson().toJson(this@CartActivity.getApolloTheme()))
+                }
+                "goToCustomer" -> {
+                    cartSdk.getCartDelegate().goToCustomer(this@CartActivity)
                 }
 
                 else -> result.notImplemented()

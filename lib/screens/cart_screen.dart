@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:spos_v2/channel/cart_delegate.dart';
 import 'package:spos_v2/providers/cart_manager.dart';
 import 'package:spos_v2/theme/apollo_color.dart';
 import 'package:spos_v2/widgets/cart/list_items.dart';
@@ -20,7 +21,9 @@ class CartScreen extends StatelessWidget {
         title: const Text("Cart"),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              CartDelegate.goToCustomer();
+            },
             icon: const Icon(Icons.delete),
           )
         ],

@@ -1,5 +1,7 @@
 package com.example.spos_v2
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -10,6 +12,8 @@ import androidx.appcompat.widget.AppCompatButton
 import androidx.lifecycle.lifecycleScope
 import com.example.spos_v2.cart.CartActivity
 import com.example.spos_v2.cart.CartBus
+import com.example.spos_v2.cart.CartDelegate
+import com.example.spos_v2.cart.CartSdk
 import com.example.spos_v2.discovery.SearchDiscoveryProductRequest
 import com.example.spos_v2.discovery.SearchDiscoveryProductResponse
 import com.example.spos_v2.models.AddProductRequest
@@ -32,7 +36,11 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         terraApp = TerraApp.initializeApp(this@MainActivity.application, APP_NAME)
         initApolloInstance(terraApp.getConfig("apollo").config, APP_NAME)
-        CartBus.getInstance(this, terraApp)
+        CartSdk.createInstance(CartBus.getInstance(this, terraApp), object : CartDelegate {
+            override fun goToCustomer(context: Context) {
+                context.startActivity(Intent(context, UserActivity::class.java))
+            }
+        })
         TerraDiscovery.getInstance(terraApp = terraApp)
         DiscoveryManager.getInstance(terraApp)
         DiscoveryRequestBuilder.setTerminalCode("vnshop")
