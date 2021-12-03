@@ -2,6 +2,7 @@ package com.example.spos_v2.cart
 
 import android.content.Context
 import com.example.spos_v2.models.AddProductRequest
+import com.example.spos_v2.models.CustomerProfile
 import vn.teko.cart.core.CartFactory
 import vn.teko.cart.core.CartManager
 import vn.teko.cart.core.cartConfig
@@ -22,6 +23,7 @@ class CartBus(
     init {
         cartManager.refreshCart()
         subscribeAddItem()
+        subscribeSelectCustomerProfile()
     }
 
     fun getCartFlow() = cartManager.getCartFlow()
@@ -42,6 +44,26 @@ class CartBus(
                 } else {
                     TerraBusResult.failure(result.exception())
                 }
+            }
+        })
+    }
+
+    private fun subscribeSelectCustomerProfile() {
+        terraApp.getTerraBus().subscribeSelectCustomerProfile(object : Subscriber<CustomerProfile, Unit>() {
+            override suspend fun handle(
+                event: CustomerProfile,
+                options: EventOptions,
+            ): TerraBusResult<Unit> {
+                NativeMethodChannel.setCustomer(
+                    mapOf(
+                        "id" to event.id,
+                        "name" to event.name,
+                        "customerProfileId" to event.customerProfileId,
+                        "phone" to event.phone,
+                        "fullAddress" to event.fullAddress,
+                    )
+                )
+                return TerraBusResult.success(Unit)
             }
         })
     }
@@ -104,4 +126,8 @@ class CartBus(
 
 internal fun TerraBus.subscribeAddItemEvent(subscriber: Subscriber<AddProductRequest, CartItemEntity>) {
     subscribeRequest("CART_ADD_PRODUCT", subscriber)
+}
+
+internal fun TerraBus.subscribeSelectCustomerProfile(subscriber: Subscriber<CustomerProfile, Unit>) {
+    subscribeRequest("USER_PROFILE_SET_SELECT_CUSTOMER", subscriber)
 }

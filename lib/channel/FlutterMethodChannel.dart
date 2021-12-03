@@ -1,5 +1,6 @@
 import 'package:flutter/services.dart';
 import 'package:spos_v2/providers/cart_manager.dart';
+import 'package:spos_v2/providers/customer.dart';
 import 'package:spos_v2/theme/apollo_color.dart';
 
 class FlutterMethodChannel {
@@ -22,6 +23,9 @@ class FlutterMethodChannel {
     switch (call.method) {
       case "refreshCart":
         CartManager.instance.refreshCart();
+        break;
+      case "selectCustomer":
+        Customer.instance.setCustomer(call.arguments);
         break;
       default:
         print('no method handler for method ${call.method}');

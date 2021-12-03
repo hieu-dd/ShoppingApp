@@ -8,6 +8,18 @@ class CartEntity with ChangeNotifier {
 
   CartEntity(this.id, this.orderLines, this.grandTotal);
 
+  List<CartLineEntity> get selectOrderLines {
+    return orderLines.where((element) => element.selected).toList();
+  }
+
+  bool get hasItems {
+    return orderLines.isNotEmpty;
+  }
+
+  bool get hasSelectItems {
+    return orderLines.where((element) => element.selected).isNotEmpty;
+  }
+
   static CartEntity fromJson(dynamic jsonString) {
     try {
       final orderLinesJson = jsonString['items'] as List<dynamic>;

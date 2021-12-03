@@ -14,4 +14,8 @@ object NativeMethodChannel {
     fun refreshCart() {
         methodChannel.invokeMethod("refreshCart", null)
     }
+
+    fun setCustomer(customer: Map<String, String?>) {
+        methodChannel.invokeMethod("selectCustomer", customer)
+    }
 }

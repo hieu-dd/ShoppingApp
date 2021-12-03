@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:spos_v2/channel/cart_delegate.dart';
 import 'package:spos_v2/providers/cart_manager.dart';
+import 'package:spos_v2/screens/confirmation_screen.dart';
 import 'package:spos_v2/theme/apollo_color.dart';
 import 'package:spos_v2/widgets/cart/list_items.dart';
 
@@ -75,7 +76,9 @@ class CartScreen extends StatelessWidget {
                           width: 150,
                           height: 40,
                           child: ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.of(context).pushNamed(ConfirmationScreen.routeName);
+                            },
                             child: const Text("Tiếp tục"),
                           ),
                         )
