@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:spos_v2/channel/FlutterMethodChannel.dart';
+import 'package:spos_v2/channel/flutter_method_channel.dart';
 import 'package:spos_v2/providers/cart_entity.dart';
 
 class CartManager with ChangeNotifier {

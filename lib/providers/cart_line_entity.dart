@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:spos_v2/channel/FlutterMethodChannel.dart';
+import 'package:spos_v2/channel/flutter_method_channel.dart';
 
 class CartLineEntity with ChangeNotifier {
   final String id;

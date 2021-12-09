@@ -1,4 +1,4 @@
-import 'FlutterMethodChannel.dart';
+import 'flutter_method_channel.dart';
 
 class CartDelegate {
   static void goToCustomer() {

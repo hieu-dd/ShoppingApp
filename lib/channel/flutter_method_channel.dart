@@ -1,4 +1,5 @@
 import 'package:flutter/services.dart';
+import 'package:spos_v2/extension/string_extension.dart';
 import 'package:spos_v2/providers/cart_manager.dart';
 import 'package:spos_v2/providers/customer.dart';
 import 'package:spos_v2/theme/apollo_color.dart';
@@ -25,6 +26,7 @@ class FlutterMethodChannel {
         CartManager.instance.refreshCart();
         break;
       case "selectCustomer":
+        "Se3r".get_size();
         Customer.instance.setCustomer(call.arguments);
         break;
       default:

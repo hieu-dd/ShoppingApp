@@ -6,7 +6,7 @@ import 'package:spos_v2/screens/cart_screen.dart';
 import 'package:spos_v2/screens/confirmation_screen.dart';
 import 'package:spos_v2/theme/apollo_color.dart';
 
-import 'channel/FlutterMethodChannel.dart';
+import 'channel/flutter_method_channel.dart';
 
 void main() {
   runApp(const MyApp());
