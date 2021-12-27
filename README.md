@@ -1,6 +1,6 @@
 # spos_v2
 
-A new Flutter project.
+A prj demo combine Flutter and Kotlin Multiple Platform
 
 ## Getting Started
 
